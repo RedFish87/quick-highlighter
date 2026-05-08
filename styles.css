@@ -1,0 +1,61 @@
+.safari-hl {
+    color: #000 !important;
+    background-color: var(--hl-color) !important;
+    display: inline !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font: inherit !important;
+    line-height: inherit !important;
+    vertical-align: baseline !important;
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+}
+.hl-toast {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1d1d1f;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: 14px;
+    z-index: 9999999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+#hl-palette {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 15px 25px;
+    border-radius: 50px;
+    display: flex;
+    gap: 20px;
+    z-index: 9999999;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+}
+.hl-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+.hl-dot.active {
+    transform: scale(1.4);
+    border-color: #fff;
+    box-shadow: 0 0 15px var(--dot-color);
+}
