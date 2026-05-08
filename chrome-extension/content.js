@@ -1,6 +1,7 @@
  (function() {
      'use strict';
-     if (document.getElementById('hl-palette')) return;
+     if (window.__quickHighlighterLoaded) return;
+     window.__quickHighlighterLoaded = true;
 
      const colors = [
          { name: 'Yellow', value: '#FFF382' },
@@ -9,13 +10,14 @@
          { name: 'Blue',  value: '#A0E8FF' }
      ];
 
-     let colorIndex   = 0;
-     let currentColor = colors[0].value;
-     let history      = [];
-     let holdTimer    = null;
+     let colorIndex    = 0;
+     let currentColor  = colors[0].value;
+     let history       = [];
+     let holdTimer     = null;
      let cycleInterval = null;
-     let isCycling    = false;
-     let hKeyDown     = false;
+     let isCycling     = false;
+     let hKeyDown      = false;
+     let palette       = null;
 
      // ---- helpers ----
 
@@ -46,7 +48,7 @@
      const showToast = (message) => {
          let toast = document.querySelector('.hl-toast') || document.createElement('div');
          toast.className = 'hl-toast';
-         if (!toast.parentNode) document.body.appendChild(toast);
+         if (!toast.parentNode) document.body?.appendChild(toast);
          toast.textContent = message;
          toast.style.opacity = '1';
          setTimeout(() => { toast.style.opacity = '0'; }, 2000);
@@ -54,18 +56,31 @@
 
      // ---- palette ----
 
-     const palette = document.createElement('div');
-     palette.id = 'hl-palette';
-     colors.forEach((c) => {
-         const dot = document.createElement('div');
-         dot.className = 'hl-dot';
-         dot.style.background = c.value;
-         dot.style.setProperty('--dot-color', c.value);
-         palette.appendChild(dot);
-     });
-     document.body.appendChild(palette);
+     const ensurePalette = () => {
+         if (palette?.isConnected) return palette;
+         if (!document.body) return null;
+
+         const existing = document.getElementById('hl-palette');
+         if (existing) {
+             palette = existing;
+             return palette;
+         }
+
+         palette = document.createElement('div');
+         palette.id = 'hl-palette';
+         colors.forEach((c) => {
+             const dot = document.createElement('div');
+             dot.className = 'hl-dot';
+             dot.style.background = c.value;
+             dot.style.setProperty('--dot-color', c.value);
+             palette.appendChild(dot);
+         });
+         document.body.appendChild(palette);
+         return palette;
+     };
 
      const updatePaletteUI = () => {
+         if (!ensurePalette()) return;
          palette.querySelectorAll('.hl-dot').forEach((dot, i) => {
              dot.classList.toggle('active', i === colorIndex);
          });
@@ -176,6 +191,7 @@
              if (!hKeyDown) {
                  hKeyDown = true;
                  holdTimer = setTimeout(() => {
+                     if (!ensurePalette()) return;
                      isCycling    = true;
                      colorIndex   = 0;
                      currentColor = colors[0].value;
