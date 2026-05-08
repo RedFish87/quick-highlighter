@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Safari Highlighter v2.7.2.
+// @name         Quick Highlighter v2.7.2.
 // @version      2.7.2.
 // @description  Clipboard fix, smarter undo, no auto-capitalisation
 // @match        *://*/*
