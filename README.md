@@ -8,8 +8,11 @@ Select any text, tap H, done. Hold H to choose from 4 colours and release to app
 SHORTCUTS 
 
 H ––> Yellow highlight 
+
 H (hold) ––> Choose from Yellow, Green, Red, or Blue 
+
 R ––> Remove last highlight (OR double-click on a highlight)
+
 C ––> Copy all highlights to clipboard
 
 PERMISSIONS
