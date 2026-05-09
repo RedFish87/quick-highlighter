@@ -45,6 +45,12 @@
          history = history.filter(batch => !batch.includes(span));
      };
 
+     const clearPageFocus = () => {
+         const active = document.activeElement;
+         if (!active || active === document.body || active === document.documentElement || isTyping(active)) return;
+         if (typeof active.blur === 'function') active.blur();
+     };
+
      const showToast = (message) => {
          let toast = document.querySelector('.hl-toast') || document.createElement('div');
          toast.className = 'hl-toast';
@@ -132,6 +138,7 @@
          if (currentBatch.length > 0) {
              history.push(currentBatch);
              sel.removeAllRanges();
+             clearPageFocus();
          }
      };
 
